@@ -1,6 +1,8 @@
 import { CommandInteraction, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js'
 
 export interface CommandInt {
-  data: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder
+  data:
+    | SlashCommandBuilder
+    | SlashCommandSubcommandsOnlyBuilder
   run: (interaction: CommandInteraction) => Promise<void>
 }

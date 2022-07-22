@@ -4,6 +4,7 @@
   "description": "",
   "main": "./prod/index.js",
   "scripts": {
+    "dev": "npm run build && npm run start",
     "build": "tsc",
     "start": "node -r dotenv/config ./prod/index.js"
   },
@@ -19,6 +20,8 @@
   },
   "devDependencies": {
     "@types/node": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
     "eslint": "^8.20.0",
     "typescript": "^4.7.4"
   }
