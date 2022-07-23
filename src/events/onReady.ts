@@ -1,7 +1,8 @@
 import { REST } from '@discordjs/rest'
-import { Client } from 'discord.js'
+import { Client, TextChannel } from 'discord.js'
 import { Routes } from 'discord-api-types/v10'
 import { CommandList } from '../commands/_CommandList'
+import { looperId } from '../utils/channels'
 
 export const onReady = async (BOT: Client) => {
   const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN as string)
@@ -17,4 +18,5 @@ export const onReady = async (BOT: Client) => {
   )
 
   console.log('Discord ready!')
+  await (BOT.channels.cache.get(looperId) as TextChannel).send(`${BOT.user} has started another loop!`)
 }
