@@ -4,8 +4,10 @@ import { connectDatabase } from './database/connectDatabase'
 import { onInteraction } from './events/onInteraction'
 import { onReady } from './events/onReady'
 import { validateEnv } from './utils/validateEnv'
+import * as dotenv from 'dotenv'
 
 (async () => {
+  dotenv.config()
   if (!validateEnv()) return
 
   const BOT = new Client({intents: IntentOptions})
