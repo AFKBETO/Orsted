@@ -1,6 +1,7 @@
 import { CommandInt } from '../interfaces/CommandInt'
 import { lewdRoxy } from './lewdRoxy'
 import { magicNumber } from './magicNumber'
+import { match } from './match'
 import { ship } from './ship'
 import simpleCmd from './simpleCmd'
 import { testCmd } from './testCmd'
@@ -14,5 +15,6 @@ export const CommandList: CommandInt[] = [
   magicNumber,
   lewdRoxy,
   wholesomeKiss,
-  ship
+  ship,
+  match
 ]
