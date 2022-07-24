@@ -1,24 +1,6 @@
 import { CommandInteractionOptionResolver, SlashCommandBuilder, TextChannel, User } from 'discord.js'
 import { CommandInt } from '../interfaces/CommandInt'
-
-const randName = [
-  ["Ariel", "Atofe", "Miko", "Kishirika Kishirisu"],
-  [
-    "Perugius", "Sieg", "Pax", "Darius", "Nokopara", "Hitogami",
-    "Dark King Vita", "Gal Farion", "Luke", "Somal", "Philemon",
-    "Orsted"
-  ]
-]
-
-const randomName = (gender?: 0 | 1) => {
-  let genderIndex: number
-  if (gender !== undefined) genderIndex = gender
-  else {
-    if (Math.floor(Math.random() * 10) !== 0 ) genderIndex = 1
-    else genderIndex = 0
-  }
-  return randName[genderIndex][Math.floor(Math.random() * randName[genderIndex].length)]
-}
+import randomName from './randName'
 
 export const ship: CommandInt = {
   data: new SlashCommandBuilder()
@@ -26,24 +8,34 @@ export const ship: CommandInt = {
     .setDescription('Ship somebody with someone else.')
     .addUserOption((option) =>
       option
-        .setName('user')
+        .setName('target1')
         .setDescription('Select a user to ship')
         .setRequired(true)
+    )
+    .addUserOption((option) =>
+      option
+        .setName('target2')
+        .setDescription('Select a second user to ship')
     ) as SlashCommandBuilder,
   run: async (interaction) => {
     try {
       await interaction.deferReply()
-      let target = (interaction.options as CommandInteractionOptionResolver).getUser('user', true)
+      let target1 = (interaction.options as CommandInteractionOptionResolver).getUser('target1', true)
+      let target2 = (interaction.options as CommandInteractionOptionResolver).getUser('target2')
       let shippedTarget: string
-      if (target.id === (interaction.client.user as User).id) {
+      if (target1.id === (interaction.client.user as User).id) {
         shippedTarget = randomName(1)
-        target = interaction.user
-        await interaction.editReply(`${interaction.client.user} has shipped ${target} with ${shippedTarget} for trying to ship with Orsted!`)
+        target1 = interaction.user
+        await interaction.editReply(`${interaction.client.user} has shipped ${target1} with ${shippedTarget} for trying to ship with Orsted!`)
         return
-      } else {
-        shippedTarget = randomName()
-        await interaction.editReply(`${interaction.user} has shipped ${target} with ${shippedTarget}!`)
       }
+      if (target2 === null) {
+        shippedTarget = randomName()
+        await interaction.editReply(`${interaction.user} has shipped ${target1} with ${shippedTarget}!`)
+        return
+      }
+      await interaction.editReply(`${interaction.user} has shipped ${target1} with ${target2}!`)
+      return
     } catch (error) {
       console.error(error)
     }
