@@ -22,16 +22,22 @@ export const donut: CommandInt = {
       option
         .setName('h')
         .setDescription('Set the amount of hours')
+        .setMaxValue(72)
+        .setMinValue(0)
     )
     .addNumberOption((option) =>
       option
         .setName('min')
-        .setDescription('Set the amount of minute')
+        .setDescription('Set the amount of minutes')
+        .setMaxValue(59)
+        .setMinValue(0)
     )
     .addNumberOption((option) =>
       option
         .setName('sec')
         .setDescription('Set the amount of seconds')
+        .setMaxValue(59)
+        .setMinValue(0)
     ) as SlashCommandBuilder,
   run: async (interaction) => {
     try {
@@ -59,7 +65,7 @@ export const donut: CommandInt = {
         const start = Date.now()
         target.roles.add(donut)
         msgEmbed
-          .setDescription(`${target} has been donut! Duration: ${hour !== null ? `${hour}h ` : ''}${min !== null ? `${min}m ` : ''}${sec !== null ? `${sec}s`:''}`)
+          .setDescription(`${target} has been donut! Duration: ${hour !== null ? `${hour}h ` : ''}${min !== null ? `${min}m ` : ''}${sec !== null ? `${sec}s`:''}${time === 10 ? '10s' : ''}`)
           .setFooter({ text: `Reason: ${reason}`})
         await interaction.editReply({ embeds: [msgEmbed] })
         setTimeout(async () => {
