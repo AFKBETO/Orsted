@@ -18,7 +18,7 @@ const commentMatch = (value: number): string => {
 export const match: CommandInt = {
   data: new SlashCommandBuilder()
     .setName('match')
-    .setDescription('Check compatibility between somebody with someone else.')
+    .setDescription('Check compatibility between somebody with someone else')
     .addUserOption((option) =>
       option
         .setName('target1')
@@ -37,9 +37,8 @@ export const match: CommandInt = {
       let target1 = (interaction.options as CommandInteractionOptionResolver).getUser('target1', true)
       let target2 = (interaction.options as CommandInteractionOptionResolver).getUser('target2')
       let shippedTarget: string
-      const msgEmbed = new EmbedBuilder()
-      msgEmbed.setTitle('Match Result')
-      if (target2 === null) {
+      const msgEmbed = new EmbedBuilder().setTitle('Match Result')
+      if (target2 === null || target1.id === target2.id) {
         shippedTarget = randomName()
         while (shippedTarget === 'Orsted') {
           shippedTarget = randomName()

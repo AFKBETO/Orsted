@@ -5,7 +5,7 @@ import randomName from './randName'
 export const ship: CommandInt = {
   data: new SlashCommandBuilder()
     .setName('ship')
-    .setDescription('Ship somebody with someone else.')
+    .setDescription('Ship somebody with someone else')
     .addUserOption((option) =>
       option
         .setName('target1')
