@@ -14,22 +14,22 @@ export const magicNumber: CommandInt = {
     ) as SlashCommandBuilder,
   run: async (interaction) => {
     try {
-      await interaction.reply({ ephemeral: true, content: 'Magic number has been fetched' })
+      await interaction.deferReply({ ephemeral: true })
       const hotSauce = interaction.guild?.channels.cache.get(hotSauceId) as TextChannel
       const eventLog = interaction.guild?.channels.cache.get(eventLogId) as TextChannel
       const { user } = interaction
       const magicnumber = interaction.options.get('number', true).value
-
+      const url = `https://nhentai.net/g/${magicnumber}`
       const messageEmbed = new EmbedBuilder()
       messageEmbed.setTitle('Magic Number used')
-      messageEmbed.setDescription(`https://nhentai.net/g/${magicnumber}/`)
+      messageEmbed.setDescription(url)
       messageEmbed.setAuthor({
         name: user.tag,
         iconURL: user.displayAvatarURL()
       })
-
       await eventLog.send({ embeds: [messageEmbed] })
-      await hotSauce.send(`https://nhentai.net/g/${magicnumber}/`)
+      const reply = await hotSauce.send(url)
+      await interaction.editReply({ content: 'Magic number has been fetched' })
     } catch (error) {
       console.error(error)
     }
