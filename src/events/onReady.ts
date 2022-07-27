@@ -18,5 +18,5 @@ export const onReady = async (BOT: Client) => {
   )
 
   console.log('Discord ready!')
-  await (BOT.channels.cache.get(looperId) as TextChannel).send(`${BOT.user} has started another loop!`)
+  if (!process.env.DEV_MODE) await (BOT.channels.cache.get(looperId) as TextChannel).send(`${BOT.user} has started another loop!`)
 }
