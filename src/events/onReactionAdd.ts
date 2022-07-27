@@ -1,4 +1,4 @@
-import { MessageReaction, PartialMessageReaction, User } from 'discord.js'
+import { MessageReaction, PartialMessageReaction } from 'discord.js'
 import { getShameData } from '../modules/shameData'
 
 export const onReactionAdd = async (reaction: MessageReaction | PartialMessageReaction) => {

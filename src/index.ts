@@ -18,7 +18,7 @@ import { onReactionAdd } from './events/onReactionAdd'
     console.error('Unhandled promise rejection:', error);
   })
 
-  BOT.on('ready', async () => await onReady(BOT))
+  BOT.once('ready', async () => await onReady(BOT))
   BOT.on('interactionCreate', async (interaction) => await onInteraction(interaction))
   BOT.on('messageReactionAdd', async (reaction) => await onReactionAdd(reaction))
 
