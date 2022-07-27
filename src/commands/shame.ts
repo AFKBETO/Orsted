@@ -1,0 +1,50 @@
+import { CommandInteractionOptionResolver, EmbedBuilder, GuildMember, SlashCommandBuilder } from 'discord.js'
+import { CommandInt } from '../interfaces/CommandInt'
+import { createShameData } from '../modules/shameData'
+
+export const shame: CommandInt = {
+  data: new SlashCommandBuilder()
+    .setName('shame')
+    .setDescription('Shame somebody')
+    .addAttachmentOption((option) =>
+      option
+        .setName('proof')
+        .setDescription('Attach a pic to shame')
+        .setRequired(true)
+    )
+    .addUserOption((option) =>
+      option
+        .setName('target')
+        .setDescription('Select a user to shame')
+    )
+    .addStringOption((option) =>
+      option
+        .setName('comment')
+        .setDescription('Comment on the shame')
+    ) as SlashCommandBuilder,
+  run: async (interaction) => {
+    try {
+      await interaction.deferReply()
+      const { user } = interaction
+      const options = interaction.options as CommandInteractionOptionResolver
+      const target = options.getMember('target') as GuildMember | null
+      const imageUrl = options.getAttachment('proof', true).url
+      const comment = options.getString('comment') || `Shame on you${target ? `, ${target}` : ''}`
+
+      const msgEmbed = new EmbedBuilder()
+        .setTitle('Shame')
+        .setAuthor({
+          name: user.tag,
+          iconURL: user.displayAvatarURL()
+        })
+        .setImage(imageUrl)
+        .setDescription(comment)
+      await interaction.editReply({ embeds: [msgEmbed] })
+      const reply = await interaction.fetchReply()
+      reply.react('814457607720796212')
+      await createShameData(reply.id, user.id, target ? target.id : 'null')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
