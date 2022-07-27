@@ -25,8 +25,8 @@ export const shame: CommandInt = {
     ) as SlashCommandBuilder,
   run: async (interaction) => {
     try {
-      await interaction.reply(``)
-      await interaction.deleteReply()
+      await interaction.deferReply({ ephemeral: true })
+
       const { user } = interaction
       const options = interaction.options as CommandInteractionOptionResolver
       const target = options.getMember('target') as GuildMember | null
@@ -46,6 +46,7 @@ export const shame: CommandInt = {
       const reply = await shameChannel.send({ embeds: [msgEmbed] })
       reply.react('814457607720796212')
       await createShameData(reply.id, user.id, target ? target.id : 'null')
+      await interaction.editReply({ content: `${target} has been shamed.`})
     } catch (error) {
       console.error(error)
     }
