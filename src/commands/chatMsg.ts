@@ -19,7 +19,7 @@ export const chatMsg: CommandInt = {
 
       await interaction.channel?.send(text)
     } catch (error) {
-      console.error('chat')
+      console.error(new Date(Date.now()), 'chat')
       console.error(error)
     }
   },

@@ -18,7 +18,7 @@ export const lewdRoxy: CommandInt = {
       await interaction.followUp({ content: 'Cannot send in SFW channel', ephemeral: true })
 
     } catch (error) {
-      console.error('lewdRoxy')
+      console.error(new Date(Date.now()), 'lewdRoxy')
       console.error(error)
     }
   },

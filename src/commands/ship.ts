@@ -37,7 +37,7 @@ export const ship: CommandInt = {
       await interaction.editReply(`${interaction.user} has shipped ${target1} with ${target2}!`)
       return
     } catch (error) {
-      console.error('ship')
+      console.error(new Date(Date.now()), 'ship')
       console.error(error)
     }
   },

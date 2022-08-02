@@ -51,7 +51,7 @@ export const magicNumber: CommandInt = {
         }
       }, 1000)
     } catch (error) {
-      console.error('magicNumber')
+      console.error(new Date(Date.now()), 'magicNumber')
       console.error(error)
     }
   },

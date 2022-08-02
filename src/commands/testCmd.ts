@@ -25,7 +25,7 @@ export const testCmd: CommandInt = {
         }
       }, 1000)
     } catch (error) {
-      console.error('testCmd')
+      console.error(new Date(Date.now()), 'testCmd')
       console.error(error)
     }
   },

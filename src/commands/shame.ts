@@ -48,7 +48,7 @@ export const shame: CommandInt = {
       await createShameData(reply.id, user.id, target ? target.id : 'null')
       await interaction.editReply({ content: `${target} has been shamed.`})
     } catch (error) {
-      console.error('shame')
+      console.error(new Date(Date.now()), 'shame')
       console.error(error)
     }
   }
