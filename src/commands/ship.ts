@@ -1,6 +1,6 @@
 import { CommandInteractionOptionResolver, SlashCommandBuilder, TextChannel, User } from 'discord.js'
 import { CommandInt } from '../interfaces/CommandInt'
-import randomName from './randName'
+import randomName from '../utils/randName'
 
 export const ship: CommandInt = {
   data: new SlashCommandBuilder()

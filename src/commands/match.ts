@@ -1,7 +1,7 @@
 import { CommandInteractionOptionResolver, EmbedBuilder, SlashCommandBuilder, TextChannel, User } from 'discord.js'
 import { CommandInt } from '../interfaces/CommandInt'
 import { getMatchData } from '../modules/matchData'
-import randomName from './randName'
+import randomName from '../utils/randName'
 
 const commentMatch = (value: number): string => {
   if (value === 69) return 'Nice!'
