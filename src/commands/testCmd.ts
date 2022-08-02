@@ -1,6 +1,5 @@
-import { EmbedBuilder, SlashCommandBuilder } from 'discord.js'
+import { CommandInteractionOptionResolver, EmbedBuilder, SlashCommandBuilder } from 'discord.js'
 import { CommandInt } from '../interfaces/CommandInt'
-import { getDegenData, updateDegenData } from '../modules/degenData'
 
 export const testCmd: CommandInt = {
   data: new SlashCommandBuilder()
@@ -14,25 +13,17 @@ export const testCmd: CommandInt = {
     ) as SlashCommandBuilder,
   run: async (interaction) => {
     try {
-      await interaction.deferReply()
-      const { user } = interaction
-      const text = interaction.options.get('message', true).value
-
-      const targetDegen = await getDegenData(user.id)
-      const updatedDegen = await updateDegenData(targetDegen)
-
-      const messageEmbed = new EmbedBuilder()
-      messageEmbed.setTitle('Test Message')
-      messageEmbed.setDescription(text as string)
-      messageEmbed.setAuthor({
-        name: user.tag,
-        iconURL: user.displayAvatarURL()
-      })
-      messageEmbed.setFooter({
-        text: 'Time: ' + new Date(updatedDegen.timestamp).toLocaleDateString()
-      })
-
-      await interaction.editReply({ embeds: [messageEmbed] })
+      await interaction.deferReply({ ephemeral: true })
+      const text = (interaction.options as CommandInteractionOptionResolver).getString('message', true)
+      await interaction.editReply({ content: text })
+      setTimeout(async () => {
+        const embeds = (await interaction.fetchReply()).embeds
+        if (embeds.length > 0) {
+          await interaction.editReply('url ok')
+        } else {
+          interaction.editReply('url not ok')
+        }
+      }, 1000)
     } catch (error) {
       console.error('testCmd')
       console.error(error)

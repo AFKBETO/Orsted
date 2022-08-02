@@ -9,6 +9,7 @@ import { wholesomeKiss } from './wholesomeKiss'
 import { spank } from './spank'
 import { donut } from './donut'
 import { shame } from './shame'
+import { testCmd } from './testCmd'
 
 const simpleCommands = simpleCmd()
 
@@ -22,5 +23,6 @@ export const CommandList: CommandInt[] = [
   match,
   spank,
   donut,
-  shame
+  shame,
+  //testCmd
 ]
