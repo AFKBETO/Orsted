@@ -34,6 +34,7 @@ export const testCmd: CommandInt = {
 
       await interaction.editReply({ embeds: [messageEmbed] })
     } catch (error) {
+      console.error('testCmd')
       console.error(error)
     }
   },

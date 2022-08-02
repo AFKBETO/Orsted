@@ -53,6 +53,7 @@ const simpleCmd = (): CommandInt[] => {
       try {
         await interaction.reply(obj.msg)
       } catch (error) {
+        console.error(cmd)
         console.error(error)
       }
     }

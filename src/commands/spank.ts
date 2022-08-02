@@ -75,6 +75,7 @@ export const spank: CommandInt = {
       msgEmbed.setDescription(desc)
       interaction.editReply({ embeds: [msgEmbed] })
     } catch (error) {
+      console.error('spank')
       console.log(error)
     }
   }

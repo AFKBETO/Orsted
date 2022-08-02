@@ -81,6 +81,7 @@ export const donut: CommandInt = {
         await interaction.editReply({ embeds: [msgEmbed] })
       }
     } catch (error) {
+      console.error('donut')
       console.error(error)
     }
   }

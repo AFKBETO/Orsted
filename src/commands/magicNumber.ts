@@ -31,6 +31,7 @@ export const magicNumber: CommandInt = {
       const reply = await hotSauce.send(url)
       await interaction.editReply({ content: 'Magic number has been fetched' })
     } catch (error) {
+      console.error('magicNumber')
       console.error(error)
     }
   },

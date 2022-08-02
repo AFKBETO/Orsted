@@ -39,6 +39,7 @@ export const wholesomeKiss: CommandInt = {
       await interaction.editReply(wholesomeUrl[kissIndex])
 
     } catch (error) {
+      console.error('wholesomeKiss')
       console.error(error)
     }
   },

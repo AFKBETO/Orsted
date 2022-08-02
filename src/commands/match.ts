@@ -56,6 +56,7 @@ export const match: CommandInt = {
       await interaction.editReply({ embeds: [msgEmbed]})
       return
     } catch (error) {
+      console.error('match')
       console.error(error)
     }
   },
