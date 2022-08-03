@@ -22,7 +22,7 @@ export const magicNumber: CommandInt = {
       await interaction.deferReply({ ephemeral: true })
       const eventLog = interaction.guild?.channels.cache.get(eventLogId) as TextChannel
       const { user } = interaction
-      const magicnumber = (interaction.options as CommandInteractionOptionResolver).getNumber('magicnumber', true)
+      const magicnumber = (interaction.options as CommandInteractionOptionResolver).getNumber('number', true)
       const orstedCertified = (interaction.options as CommandInteractionOptionResolver).getBoolean('orstedcertified')
       let hotSauce: TextChannel
       if (orstedCertified) {
