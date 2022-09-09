@@ -1,7 +1,7 @@
 import { CommandInteractionOptionResolver, EmbedBuilder, GuildMember, SlashCommandBuilder, TextChannel } from 'discord.js'
 import { CommandInt } from '../interfaces/CommandInt'
 import { createShameData } from '../modules/shameData'
-import { shameId } from '../utils/channels'
+import { shameId, databaseId } from '../utils/channels'
 
 export const shame: CommandInt = {
   data: new SlashCommandBuilder()
@@ -30,9 +30,16 @@ export const shame: CommandInt = {
       const { user } = interaction
       const options = interaction.options as CommandInteractionOptionResolver
       const target = options.getMember('target') as GuildMember | null
-      const imageUrl = options.getAttachment('proof', true).url
+      const attachmentUrl = options.getAttachment('proof', true).url
       const comment = options.getString('comment') || `Shame on you${target ? `, ${target}` : ''}`
       const shameChannel = interaction.guild?.channels.cache.get(shameId) as TextChannel
+      const dbChannel = interaction.guild?.channels.cache.get(databaseId) as TextChannel
+      const imageUrl = (await dbChannel.send({
+        files: [{
+          attachment: attachmentUrl,
+          name: 'shame.png'
+        }]
+      })).attachments.first()?.url as string
 
       const msgEmbed = new EmbedBuilder()
         .setTitle('Shame')
