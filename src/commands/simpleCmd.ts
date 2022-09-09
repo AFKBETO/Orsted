@@ -48,15 +48,15 @@ const simpleCmd = (): CommandInt[] => {
     const command: CommandInt = {
       data: new SlashCommandBuilder()
       .setName(cmd)
-      .setDescription(obj.desc) as SlashCommandBuilder,
-    run: async (interaction) => {
-      try {
-        await interaction.reply(obj.msg)
-      } catch (error) {
-        console.error(new Date(Date.now()), cmd)
-        console.error(error)
+      .setDescription(obj.desc),
+      run: async (interaction) => {
+        try {
+          await interaction.reply(obj.msg)
+        } catch (error) {
+          console.error(new Date(Date.now()), cmd)
+          console.error(error)
+        }
       }
-    }
     }
     res.push(command)
   }
