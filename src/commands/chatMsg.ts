@@ -13,7 +13,7 @@ export const chatMsg: CommandInt = {
     )
     .addStringOption((option) =>
       option
-        .setName('quoteId')
+        .setName('quoteid')
         .setDescription('ID message to quote')
     )
     .setDefaultMemberPermissions(0) as SlashCommandBuilder,
