@@ -1,6 +1,7 @@
 import { CommandInteractionOptionResolver, EmbedBuilder, SlashCommandBuilder, TextChannel } from 'discord.js'
 import { CommandInt } from '../interfaces/CommandInt'
 import { eventLogId, hotSauceId, orstedHotId } from '../utils/channels'
+import { nhentai, parseTagList } from '../utils/magicAPI'
 
 export const magicNumber: CommandInt = {
   data: new SlashCommandBuilder()
@@ -22,7 +23,7 @@ export const magicNumber: CommandInt = {
       await interaction.deferReply({ ephemeral: true })
       const eventLog = interaction.guild?.channels.cache.get(eventLogId) as TextChannel
       const { user } = interaction
-      const magicnumber = (interaction.options as CommandInteractionOptionResolver).getNumber('number', true)
+      const magicNumber = (interaction.options as CommandInteractionOptionResolver).getNumber('number', true)
       const orstedCertified = (interaction.options as CommandInteractionOptionResolver).getBoolean('orstedcertified')
       let hotSauce: TextChannel
       if (orstedCertified) {
@@ -30,26 +31,29 @@ export const magicNumber: CommandInt = {
       } else {
         hotSauce = interaction.guild?.channels.cache.get(hotSauceId) as TextChannel
       }
-      const url = `https://nhentai.net/g/${magicnumber}`
-      const log = await eventLog.send({ content: url })
-      setTimeout(async () => {
-        const embeds = (await log.fetch()).embeds
-        if (embeds.length > 0) {
-          const messageEmbed = new EmbedBuilder()
-          messageEmbed.setTitle('Magic Number used')
-          messageEmbed.setDescription(url)
-          messageEmbed.setAuthor({
+      if (nhentai.exists(magicNumber)) {
+        const magicBook = await nhentai.getDoujin(magicNumber)
+        const messageEmbed = new EmbedBuilder()
+          .setTitle(magicBook.title)
+          .setURL(magicBook.link)
+          .setImage(magicBook.details.pages[0])
+          .setFields(
+            { name: 'Artists', value: parseTagList(magicBook.details.artists) },
+            { name: 'Tags', value: parseTagList(magicBook.details.tags) }
+          )
+        const logEmbed = new EmbedBuilder()
+          .setTitle('Magic Number used')
+          .setDescription('magicBook.link')
+          .setAuthor({
             name: user.tag,
             iconURL: user.displayAvatarURL()
           })
-          await log.edit({ embeds: [messageEmbed] })
-          const reply = await hotSauce.send(url)
-          await interaction.editReply({ content: 'Magic number has been fetched' })
-        } else {
-          interaction.editReply('Magic number not found')
-          await log.delete()
-        }
-      }, 1000)
+        await hotSauce.send({ embeds: [messageEmbed] })
+        await eventLog.send({ embeds: [logEmbed] })
+        await interaction.editReply({ content: 'Magic number has been fetched' })
+      } else {
+        interaction.editReply('Magic number not found')
+      }
     } catch (error) {
       console.error(new Date(Date.now()), 'magicNumber')
       console.error(error)
